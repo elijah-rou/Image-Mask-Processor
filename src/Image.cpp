@@ -10,6 +10,9 @@ Constructors
 IMAGE::Image() = default;
 
 IMAGE::Image(std::string filename){
+    if(load(filename)){
+        
+    }
 
 }
 
@@ -29,6 +32,11 @@ IMAGE::Image(Image && img){
 
 IMAGE & IMAGE::operator=(Image && img){
 
+}
+
+// Destructor
+IMAGE::~Image(){
+    delete [] & data;
 }
 
 
@@ -67,8 +75,10 @@ std::istream &operator>>(std::istream is, const IMAGE img){
 }
 
 // Out Stream
-std::ostream &operator<<(std::ostream, const IMAGE img){
+std::ostream &operator<<(std::ostream os, IMAGE img){
+    //for(const IMAGE::iterator it=img.begin(); it !=img.end()){
 
+    //}
 }
 
 
@@ -77,11 +87,16 @@ Methods
 */
 
 // read file
-bool IMAGE::read(std::string filename){
+bool IMAGE::load(std::string filename){
 
 }
 
 // load file
-bool IMAGE::load(std::string filename){
-
+bool IMAGE::save(std::string filename){
+    // write file
+	std::ofstream file("bin/output/"+filename+".pgm", std::ios::out | std::ios::binary);
+	if (file.good()){
+        file << "P5" << std::endl << this->width << " " << this->height << std::endl << "255" << std::endl << *this;
+		file.close();
+	}
 }

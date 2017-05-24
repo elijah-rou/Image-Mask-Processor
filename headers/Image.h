@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <fstream>
 
 typedef unsigned char uchar;
 
@@ -61,7 +62,7 @@ namespace RSSELI007{
             friend std::istream & operator>>(std::istream is, const Image img);
 
             // Out Stream
-            friend std::ostream & operator<<(std::ostream, const Image img);
+            friend std::ostream & operator<<(std::ostream os, const Image img);
 
 
             /*
@@ -132,14 +133,30 @@ namespace RSSELI007{
                         return * temp;
                     }
 
+                    // equality
+
+                    bool operator==(const iterator & it){
+                        if(*this->ptr == *it.ptr){
+                            return true;
+                        }
+                        else return false;
+                    }
+
+                    bool operator!=(const iterator & it){
+                        if(*this->ptr != *it.ptr){
+                            return true;
+                        }
+                        else return false;
+                    }
+
             };
 
              //Iterator Methods
 
-             iterator begin(void){
+             iterator begin(void) const {
                  return iterator(data.get());
              }
-             iterator end(void){
+             iterator end(void) const {
                  return iterator(data.get(), width*height);
              }
 
