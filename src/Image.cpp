@@ -80,39 +80,130 @@ Overloads
 
 // Addition
 IMAGE & IMAGE::operator+=(const Image & img){
-    
+    if(this->width == img.width && this->height == img.height){
+        Image::iterator lhs = this->begin();
+        for(uchar c : img){
+            if((*lhs + c) > 255){
+                *lhs = 255;
+            }
+            else{
+                *lhs += c;
+            }
+            ++lhs;
+        }
+    }
+    return *this;
+
 }
-IMAGE & IMAGE::operator+(const Image & img){
+IMAGE IMAGE::operator+(const Image & img){
+    Image result(*this);
+    result +=img;
+    return result;
 
 }
 
 // Subtraction
 IMAGE & IMAGE::operator-=(const Image & img){
+    if(this->width == img.width && this->height == img.height){
+        Image::iterator lhs = this->begin();
+        for(uchar c : img){
+            if((*lhs - c) < 0){
+                *lhs = 0;
+            }
+            else{
+                *lhs -= c;
+            }
+            ++lhs;
+        }
+    }
+    return *this;
 
 }
-IMAGE & IMAGE::operator-(const Image & img){
+IMAGE IMAGE::operator-(const Image & img){
+    Image result(*this);
+    result -=img;
+    return result;
 
 }
 
 // Invert
-IMAGE & IMAGE::operator!(){
-
+IMAGE IMAGE::operator!(){
+    Image result(*this);
+    /*
+    for(uchar c : result){
+        c = (255 - c);
+    }
+    */
+    Image::iterator it = result.begin();
+    while(it != result.end()){
+        *it = (255 - *it);
+        ++it;
+    }
+    return result;
 }
 
 // Mask
 IMAGE & IMAGE::operator/=(const Image & img){
+    if(this->width == img.width && this->height == img.height){
+        Image::iterator lhs = this->begin();
+        for(uchar c : img){
+            if(c == 0){
+                *lhs = 0;
+            }
+            ++lhs;
+        }
+    }
+    return *this;
 
 }
-IMAGE & IMAGE::operator/(const Image & img){
+IMAGE IMAGE::operator/(const Image & img){
+    Image result(*this);
+    result /= img;
+    return result;
 
 }
 
 // Int Threshold
 IMAGE & IMAGE::operator*=(int f){
-
+    Image::iterator it = this->begin();
+    while(it != this->end()){
+        *it = *it > f ? 255 : 0;
+        ++it;
+    }
+    return *this;
 }
-IMAGE & IMAGE::operator*(int f){
+IMAGE IMAGE::operator*(int f){
+    Image result(*this);
+    result *= f;
+    return result;
+}
 
+// Equality
+bool IMAGE::operator==(const IMAGE & img){
+    if(this->width == img.width && this->height == img.height){
+        Image::iterator lhs = this->begin();
+        for(uchar c : img){
+            if(*lhs != c){
+                return false;
+            }
+            ++lhs;
+        }
+        return true;
+    }
+    return false;
+}
+bool IMAGE::operator!=(const IMAGE & img){
+    if(this->width == img.width && this->height == img.height){
+        Image::iterator lhs = this->begin();
+        for(uchar c : img){
+            if(*lhs != c){
+                return true;
+            }
+            ++lhs;
+        }
+        return false;
+    }
+    return true;
 }
 
 // In Byte Stream

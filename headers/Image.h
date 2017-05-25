@@ -47,22 +47,26 @@ namespace RSSELI007{
 
             // Addition
             Image & operator+=(const Image & img);
-            Image & operator+(const Image & img);
+            Image operator+(const Image & img);
 
             // Subtraction
             Image & operator-=(const Image & img);
-            Image & operator-(const Image & img);
+            Image operator-(const Image & img);
 
             // Invert
-            Image & operator!();
+            Image operator!();
 
             // Mask
             Image & operator/=(const Image & img);
-            Image & operator/(const Image & img);
+            Image operator/(const Image & img);
 
             // Int Threshold
             Image & operator*=(int f);
-            Image & operator*(int f);
+            Image operator*(int f);
+
+            // Equality
+            bool operator==(const Image & img);
+            bool operator!=(const Image & img);
 
             // In Stream
             friend std::istream & operator>>(std::istream & is, Image & img);
@@ -148,17 +152,11 @@ namespace RSSELI007{
                     // equality
 
                     bool operator==(const iterator & it){
-                        if(*this->ptr == *it.ptr){
-                            return true;
-                        }
-                        else return false;
+                        return ptr == it.ptr;
                     }
 
                     bool operator!=(const iterator & it){
-                        if(*this->ptr != *it.ptr){
-                            return true;
-                        }
-                        else return false;
+                        return ptr != it.ptr;
                     }
 
             };
@@ -166,10 +164,10 @@ namespace RSSELI007{
              //Iterator Methods
 
              iterator begin(void) const {
-                 return iterator(data.get());
+                 return iterator(this->data.get());
              }
              iterator end(void) const {
-                 return iterator(data.get(), width*height);
+                 return iterator(this->data.get(), width*height);
              }
              // for testing
              iterator last(void) const {
