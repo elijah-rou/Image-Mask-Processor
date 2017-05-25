@@ -5,17 +5,19 @@
 #include <string>
 #include <memory>
 #include <fstream>
+#include <sstream>
 
-typedef unsigned char uchar;
 
 namespace RSSELI007{
+    typedef unsigned char uchar;
     class Image{
-
         private:
 
-        int width, height;
+            int width, height;
 
-        std::unique_ptr<uchar[]> data;
+            std::string filename;
+
+            std::unique_ptr<uchar[]> data;
 
         public:
 
@@ -44,25 +46,29 @@ namespace RSSELI007{
             */
 
             // Addition
+            Image & operator+=(const Image & img);
             Image & operator+(const Image & img);
 
             // Subtraction
+            Image & operator-=(const Image & img);
             Image & operator-(const Image & img);
 
             // Invert
             Image & operator!();
 
             // Mask
+            Image & operator/=(const Image & img);
             Image & operator/(const Image & img);
 
             // Int Threshold
+            Image & operator*=(int f);
             Image & operator*(int f);
 
             // In Stream
-            friend std::istream & operator>>(std::istream is, const Image img);
+            friend std::istream & operator>>(std::istream & is, Image & img);
 
             // Out Stream
-            friend std::ostream & operator<<(std::ostream os, const Image img);
+            friend std::ostream & operator<<(std::ostream & os, const Image & img);
 
 
             /*
@@ -72,6 +78,12 @@ namespace RSSELI007{
             bool load(std::string filename);
 
             bool save(std::string filename);
+
+            int getWidth(void){ return this->width; }
+
+            int getHeight(void){ return this->height; }
+
+            std::string getFilename(void){ return this->filename; }
 
             /*
             Iterator
@@ -159,6 +171,10 @@ namespace RSSELI007{
              iterator end(void) const {
                  return iterator(data.get(), width*height);
              }
+             // for testing
+             iterator last(void) const {
+                return iterator(data.get(), width*height-1);
+            }
 
     };
 }
