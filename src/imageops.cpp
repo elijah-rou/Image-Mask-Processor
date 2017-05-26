@@ -62,7 +62,7 @@ int main(int argc, char* argv[]){
         else if (arg == "-f"){
             IMAGE file_i = IMAGE::Image(argv[i + 1]);
             FILTER g(argv[i + 2]);
-            g.print();
+            //g.print();
             //IMAGE result = file_i%g;
             //result.save(argv[i + 3])
         }
