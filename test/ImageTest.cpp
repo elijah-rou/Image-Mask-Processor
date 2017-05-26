@@ -13,7 +13,7 @@ Image image1("Lenna_standard.pgm");
 
 TEST_CASE("Constructors"){
 
-    SECTION("CONSTRUCT"){
+    SECTION("CONSTRUCT and LOAD"){
         REQUIRE(image1.getWidth() == 512);
         REQUIRE(image1.getHeight() == 512);
         REQUIRE(image1.getFilename() == "Lenna_standard.pgm");
@@ -80,10 +80,26 @@ TEST_CASE("Constructors"){
 
 TEST_CASE("Operators"){
     Image image2("Lenna_hat_mask.pgm");
-    SECTION("ADDITION"){
-        //Image result = image1 + image2;
+    // normalise the mask
+    SECTION("EQUALITY and THRESHOLD"){
+        image2 *= 0; // normalise
+        Image test("Lenna_hat_mask.pgm");
+        test *= 0; // normalise
+        REQUIRE(image2 == test);
+        REQUIRE(image2 != image1);
     }
-
+    SECTION("ADDITION, SUBTRACTION & INVERSION"){
+        image2 *= 0; // normalise
+        Image imgAdd = !(image1 + image2)*0;
+        Image imgSub = !((!image1 - !image2)*0);
+        REQUIRE(imgAdd == imgSub);
+    }
+    SECTION("MASKING"){
+        image2 *= 0; //normalise
+        Image imgMask = image1/image2;
+        imgMask *= 0; //normalise
+        REQUIRE(imgMask == image2);
+    }
 }
 
 TEST_CASE("METHODS"){

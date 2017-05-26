@@ -16,6 +16,7 @@ IMAGE::Image(){
 IMAGE::Image(std::string filename){
     this->filename = filename;
     if(!load(filename)){
+        exit(1);
     }
 
 }
