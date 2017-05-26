@@ -30,6 +30,7 @@ quick:
 	bin/$(OUT) -i Lenna_standard.pgm outInv
 	bin/$(OUT) -l Lenna_standard.pgm Lenna_hat_mask.pgm outMas
 	bin/$(OUT) -t Lenna_standard.pgm 100 outThr
+	bin/$(OUT) -f Lenna_standard.pgm blur.fir outFil
 
 test: $(OBJ_FILES)
 	$(CC) $(TEST_FILES) -o bin/test --std=c++11

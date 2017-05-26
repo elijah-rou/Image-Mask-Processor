@@ -12,7 +12,47 @@ namespace RSSELI007{
     typedef unsigned char uchar;
 
     struct Filter{
-        
+        std::size_t dimension;
+        double ** matrix;
+
+        Filter(std::string filename){
+            std::ifstream file("filters/" + filename);
+            if (file.good()){
+                std::string line;
+                std::getline(file, line);
+
+                std::istringstream iss(line);
+                std::string str;
+                std::getline(iss, str, ' ');
+                dimension = std::stoi(str);
+
+                matrix = new double*[dimension];
+                for(int i=0; i<dimension; ++i){
+                   double * col = new double[dimension];
+                    for(int j=0; j<dimension; ++j){
+                        std::getline(iss, str, ' ');
+                        col[j] = atof(str.c_str());
+                    }
+                    matrix[i] = col;
+                }
+            }
+        }
+        ~Filter(){
+            for(unsigned int i=0; i<dimension; i++){
+                delete matrix[i];
+            }
+            delete [] matrix;
+        }
+
+        void print(void){
+            std::cout << "PRINTING G " << dimension << std::endl;
+            for(int i=0; i<dimension; ++i){
+                    for(int j=0; j<dimension; ++j){
+                        std::cout << matrix[i][j] << " ";
+                    }
+                    std::cout << std::endl;
+                }
+        }
     };
 
     class Image{
@@ -23,6 +63,9 @@ namespace RSSELI007{
             std::string filename;
 
             std::unique_ptr<uchar[]> data;
+
+            // method for convertiing data set into 2D from 1D
+            uchar** to_2D();
 
         public:
 

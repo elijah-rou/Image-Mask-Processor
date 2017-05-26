@@ -1,4 +1,5 @@
 #define IMAGE RSSELI007::Image
+#define FILTER RSSELI007::Filter
 
 #include <iostream>
 #include <string>
@@ -59,7 +60,11 @@ int main(int argc, char* argv[]){
 
         // filter image
         else if (arg == "-f"){
-            
+            IMAGE file_i = IMAGE::Image(argv[i + 1]);
+            FILTER g(argv[i + 2]);
+            g.print();
+            //IMAGE result = file_i%g;
+            //result.save(argv[i + 3])
         }
     }
 }

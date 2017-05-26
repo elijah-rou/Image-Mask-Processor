@@ -225,10 +225,42 @@ std::ostream & RSSELI007::operator<<(std::ostream & os, const IMAGE & img){
     return os;
 }
 
+// Filter
+IMAGE & IMAGE::operator%=(const RSSELI007::Filter & g){
+    UCHAR ** buffer = to_2D();
+    for (int i = 0; i < this->width; ++i){
+        for (int j = 0; j < this->height; ++j){
+            UCHAR * array = new UCHAR[g.dimension];
+        }
+    }
+    delete [] buffer;
+    return *this;
+}
+IMAGE IMAGE::operator%(const RSSELI007::Filter & g){
+    Image result(*this);
+    result %= g;
+    return result;
+}
 
 /*
 Methods
 */
+
+// method for convertiing data set into 2D from 1D
+UCHAR** IMAGE::to_2D(void){
+    UCHAR ** buffer = new UCHAR*[this->width];
+    iterator it = this->begin();
+    for (int i = 0; i < this->width; ++i){
+        UCHAR *col = new UCHAR[this->height];
+        for (int j = 0; j < this->height; ++j){
+            col[j] = *it;
+            ++it;
+        }
+        buffer[i] = col;
+    }
+    return buffer;
+}
+
 
 // read file
 bool IMAGE::load(std::string filename){
