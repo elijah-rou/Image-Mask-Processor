@@ -1,0 +1,29 @@
+Hi there glorious tutor,
+
+All .cpp files are in src/, all .h files are in headers/, .o's will be 
+in obj/ and finally all output will located in bin/ (with created images being in
+bin/output/)
+
+test files are located in test/, and all images are to be put in img/ before running
+the program
+
+
+NB!!!!
+please note that the specified output name need not have the extension, it is
+automatically added in the program
+
+
+to run use:
+    make run args="...." 
+or
+    make quick
+which runs all the commands
+Alternatively run the executable from the project directory 
+    bin/imageops args
+
+to test, run
+    make test
+or
+    bin/test
+
+make clean, will clean ALL output and object files

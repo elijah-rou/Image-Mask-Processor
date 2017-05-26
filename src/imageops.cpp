@@ -62,5 +62,4 @@ int main(int argc, char* argv[]){
             
         }
     }
-    //std::cout << "could still be dead lol" << std::endl;
 }

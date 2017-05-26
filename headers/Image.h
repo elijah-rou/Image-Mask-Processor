@@ -10,6 +10,11 @@
 
 namespace RSSELI007{
     typedef unsigned char uchar;
+
+    struct Filter{
+        
+    };
+
     class Image{
         private:
 
@@ -73,6 +78,10 @@ namespace RSSELI007{
 
             // Out Stream
             friend std::ostream & operator<<(std::ostream & os, const Image & img);
+
+            // Filter
+            Image & operator%=(const Filter & g);
+            Image operator%(const Filter & g);
 
 
             /*
