@@ -27,3 +27,6 @@ or
     bin/test
 
 make clean, will clean ALL output and object files
+
+please note I started implementing the filter overload,
+but unfortunately I did not complete it in time
